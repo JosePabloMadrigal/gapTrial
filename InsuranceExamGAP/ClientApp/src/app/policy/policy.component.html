@@ -1,0 +1,130 @@
+<div fxLayout="row">
+  <div fxFlex>
+    <form [formGroup]="policyForm" (ngSubmit)="addPolicy()">
+      <p>
+        <mat-form-field>
+          <input type="text" matInput placeholder="Nombre de la poliza" formControlName="name" [ngClass]="{ 'is-invalid': f.name.errors }" />
+          <mat-error *ngIf="f.name.errors">
+            <mat-error *ngIf="f.name.errors.required">Policy name is required</mat-error>
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field>
+          <textarea type="text" formControlName="description" matInput placeholder="Descripcion" [ngClass]="{ 'is-invalid': f.description.errors }"></textarea>
+          <mat-error *ngIf="f.description.errors">
+            <mat-error *ngIf="f.description.errors.required">Description is required</mat-error>
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field>
+          <mat-label>Tipo de poliza</mat-label>
+          <mat-select formControlName="policyTypeId" required>
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let policy of policyTypes" [value]="policy.policyTypeId">
+              {{policy.name}}, {{policy.policyCover * 100}}%
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="f.policyTypeId.errors">
+            <mat-error *ngIf="f.policyTypeId.errors.required">Escoja un tipo de poliza</mat-error>
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field>
+          <mat-label>Tipo de riesgo</mat-label>
+          <mat-select formControlName="riskTypeId" required>
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let risk of riskTypes" [value]="risk.riskTypeId">
+              {{risk.name}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="f.riskTypeId.errors">
+            <mat-error *ngIf="f.riskTypeId.errors.required">Escoja un tipo de riesgo</mat-error>
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field>
+          <input matInput placeholder="Fecha de inicio de la poliza" formControlName="policyDateBegin" [min]="minDate" [matDatepicker]="picker">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="f.policyDateBegin.errors">
+            <mat-error *ngIf="f.policyDateBegin.errors.required">Escoja una fecha de inicio</mat-error>
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field>
+          <input matInput type="number" placeholder="Periodo en meses de la poliza" formControlName="policyMonthsPeriod" min="1" max="120">
+          <mat-error *ngIf="f.policyMonthsPeriod.errors">
+            <mat-error *ngIf="f.policyMonthsPeriod.errors.required">Escoja un periodo de meses</mat-error>
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field>
+          <input matInput placeholder="Amount" type="number" formControlName="policyCost">
+          <span matPrefix>$&nbsp;</span>
+          <span matSuffix>.00</span>
+          <mat-error *ngIf="f.policyCost.errors">
+            <mat-error *ngIf="f.policyCost.errors.required">Escoja un periodo de meses</mat-error>
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <button mat-raised-button [disabled]="loading">Save</button>
+      <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+    </form>
+
+    <table mat-table [dataSource]="policies" class="mat-elevation-z8">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Nombre</th>
+        <td mat-cell *matCellDef="let policy"> {{policy.name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef> Descripcion</th>
+        <td mat-cell *matCellDef="let policy"> {{policy.description}} </td>
+      </ng-container>
+      <ng-container matColumnDef="policyType">
+        <th mat-header-cell *matHeaderCellDef> Tipo de poliza </th>
+        <td mat-cell *matCellDef="let policy"> {{policy.policyType.name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="riskType">
+        <th mat-header-cell *matHeaderCellDef> Tipo de riesgo </th>
+        <td mat-cell *matCellDef="let policy"> {{policy.riskType.name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="policyDateBegin">
+        <th mat-header-cell *matHeaderCellDef> Fecha de inicio</th>
+        <td mat-cell *matCellDef="let policy"> {{policy.policyDateBegin}} </td>
+      </ng-container>
+      <ng-container matColumnDef="policyMonthsPeriod">
+        <th mat-header-cell *matHeaderCellDef> Periodo en meses</th>
+        <td mat-cell *matCellDef="let policy"> {{policy.policyMonthsPeriod}} </td>
+      </ng-container>
+      <ng-container matColumnDef="policyCost">
+        <th mat-header-cell *matHeaderCellDef> Costo </th>
+        <td mat-cell *matCellDef="let policy">
+          <span matPrefix>$&nbsp;</span> {{policy.policyCost}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="options">
+        <th mat-header-cell *matHeaderCellDef> * </th>
+        <td mat-cell *matCellDef="let policy">
+          <button mat-raised-button>Edit</button>
+          <button mat-raised-button (click)="deletePolicy(policy.policyId)">Delete</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</div>
+
+
+<div fxLayout="row">
+  <div fxFlex>
+
+  </div>
+</div>

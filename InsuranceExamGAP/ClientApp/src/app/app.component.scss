@@ -1,0 +1,11 @@
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+html, body {
+  height: 100%;
+}
+app-root {
+  min-height: 100%;
+  display: flex;
+}
+table {
+  width: 100%;
+}
