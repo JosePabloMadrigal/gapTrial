@@ -49,7 +49,7 @@ namespace InsuranceExamGAP_ORM.Repositories
                 }
 
             }
-            catch (Exception e)
+            catch (CostRiskException e)
             {
                 throw e;
             }

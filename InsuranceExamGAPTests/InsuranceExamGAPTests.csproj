@@ -13,4 +13,8 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\InsuranceExamGAP-ORM\InsuranceExamData.csproj" />
+  </ItemGroup>
+
 </Project>
