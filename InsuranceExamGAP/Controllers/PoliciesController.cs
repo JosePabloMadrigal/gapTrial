@@ -37,13 +37,35 @@ namespace InsuranceExamGAP.Controllers
         [HttpPost("create")]
         public async Task<ActionResult<Policy>> PostPolicy(Policy policy)
         {
-            return await _policyRepository.CreatePolicy(policy);
+
+            try
+            {
+                return await _policyRepository.UpdatePolicy(policy);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "Server Error");
+
+
+            }
+            
         }
         // PUT: api/UpdatePolicy
         [HttpPost("update")]
         public async Task<ActionResult<Policy>> UpdatePolicy(Policy policy)
         {
-            return await _policyRepository.UpdatePolicy(policy);
+            try
+            {
+                return await _policyRepository.UpdatePolicy(policy);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "Server Error");
+
+
+            }
+
+
         }
 
         

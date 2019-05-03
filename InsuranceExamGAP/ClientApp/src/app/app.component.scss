@@ -1,7 +1,5 @@
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
-html, body {
-  height: 100%;
-}
+
 app-root {
   min-height: 100%;
   display: flex;
@@ -9,3 +7,40 @@ app-root {
 table {
   width: 100%;
 }
+
+.container {
+  min-height: 100%;
+  width: 100%;
+}
+mat-card{
+  margin-top:0.5%;
+}
+
+app-footer{
+  margin-bottom:0.5%;
+}
+
+.toolbar-session-info-is-mobile .toolbar-session-info {
+  position: fixed;
+  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+  z-index: 2;
+}
+
+h1.example-app-name {
+  margin-left: 8px;
+}
+
+.sidenav-container {
+  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+     causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+  flex: 1;
+}
+
+.toolbar-session-info-is-mobile .sidenav-container {
+  /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+     `<body>` to be our scrolling element for mobile layouts. */
+  height:100%;  
+  flex: 1 0 auto;
+}
+
+

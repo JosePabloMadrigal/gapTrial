@@ -1,0 +1,22 @@
+
+<div fxflex="column" [formGroup]="policyClientForm">
+  <mat-form-field>
+    <mat-select (selectionChange)="clientChange($event.value)" placeholder="Clientes" formControlName="clients">
+      <mat-option *ngFor="let client of clients" [value]="client.clientId">{{client.fullName}}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="f.clients.errors">
+      <mat-error *ngIf="f.clients.errors.required">Escoja un cliente</mat-error>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Polizas" formControlName="policies" multiple>
+      <mat-option *ngFor="let policy of policyList" [value]="policy.policyId">{{policy.name}}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="f.policies.errors">
+      <mat-error *ngIf="f.policies.errors.required">Escoja una o varias polizas</mat-error>
+    </mat-error>
+  </mat-form-field>
+  <button mat-raised-button (click)="save()">Save</button>
+</div>
+
+

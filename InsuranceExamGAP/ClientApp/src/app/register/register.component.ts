@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import { AlertService, UserService, AuthenticationService } from '../_services';
+import { AlertService, UserService, AuthenticationService, HeaderService } from '../_services';
 
 @Component({ templateUrl: 'register.component.html' })
 export class RegisterComponent implements OnInit {
@@ -16,7 +16,8 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private userService: UserService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private headerService: HeaderService
   ) {
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
@@ -30,6 +31,7 @@ export class RegisterComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
+    this.headerService.setTitle('Registro de usuario');
   }
 
   // convenience getter for easy access to form fields
@@ -53,7 +55,6 @@ export class RegisterComponent implements OnInit {
           this.router.navigate(['/login']);
         },
       error => {
-        debugger;
           this.alertService.error("El username ya existe");
           this.loading = false;
         });

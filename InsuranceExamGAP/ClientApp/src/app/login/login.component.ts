@@ -3,20 +3,21 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import { AlertService, AuthenticationService } from '../_services';
+import { AlertService, AuthenticationService, HeaderService } from '../_services';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
   returnUrl: string;
-
+  
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private headerService: HeaderService
   ) {
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
@@ -32,6 +33,7 @@ export class LoginComponent implements OnInit {
 
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.headerService.setTitle('Administrador de polizas');
   }
 
   // convenience getter for easy access to form fields

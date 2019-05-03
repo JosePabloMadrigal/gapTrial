@@ -1,0 +1,74 @@
+<h2 mat-dialog-title>{{title}}</h2>
+
+<mat-dialog-content [formGroup]="policyForm">
+  <div fxLayout="column">
+    <mat-form-field>
+      <input type="text" matInput placeholder="Nombre de la poliza" formControlName="name"  />
+      <mat-error *ngIf="f.name.errors">
+        <mat-error *ngIf="f.name.errors.required">Nombre de la poliza es requerido</mat-error>
+        <mat-error *ngIf="f.name.errors.minlength">El tamano minimo es 5 caracteres</mat-error>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea type="text" formControlName="description" matInput placeholder="Descripcion"></textarea>
+      <mat-error *ngIf="f.description.errors">
+        <mat-error *ngIf="f.description.errors.required">Descripcion es requerida</mat-error>
+        <mat-error *ngIf="f.description.errors.minlength">El tamano minimo es 5 caracteres</mat-error>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Tipo de poliza</mat-label>
+      <mat-select formControlName="policyTypeId" required>
+        <mat-option>--</mat-option>
+        <mat-option *ngFor="let policy of policyTypes" [value]="policy.policyTypeId">
+          {{policy.name}}, {{policy.policyCover * 100}}%
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="f.policyTypeId.errors">
+        <mat-error *ngIf="f.policyTypeId.errors.required">Escoja un tipo de poliza</mat-error>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Tipo de riesgo</mat-label>
+      <mat-select formControlName="riskTypeId" required>
+        <mat-option>--</mat-option>
+        <mat-option *ngFor="let risk of riskTypes" [value]="risk.riskTypeId">
+          {{risk.name}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="f.riskTypeId.errors">
+        <mat-error *ngIf="f.riskTypeId.errors.required">Escoja un tipo de riesgo</mat-error>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Fecha de inicio de la poliza" formControlName="policyDateBegin" [min]="minDate" [matDatepicker]="picker">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="f.policyDateBegin.errors">
+        <mat-error *ngIf="f.policyDateBegin.errors.required">Escoja una fecha de inicio</mat-error>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" placeholder="Periodo en meses de la poliza" formControlName="policyMonthsPeriod" min="1" max="120">
+      <mat-error *ngIf="f.policyMonthsPeriod.errors">
+        <mat-error *ngIf="f.policyMonthsPeriod.errors.required">Escoja un periodo de meses</mat-error>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Periodo de poliza en meses" type="number" formControlName="policyCost">
+      <span matPrefix>$&nbsp;</span>
+      <span matSuffix>.00</span>
+      <mat-error *ngIf="f.policyCost.errors">
+        <mat-error *ngIf="f.policyCost.errors.required">Escoja un periodo de meses</mat-error>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button (click)="save()">Guardar</button>
+  <button mat-raised-button (click)="close()">Cancelar</button>
+</mat-dialog-actions>

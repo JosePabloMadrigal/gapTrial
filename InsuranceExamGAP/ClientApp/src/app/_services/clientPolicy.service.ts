@@ -7,7 +7,12 @@ import { ClientPolicy } from '../_models';
 export class ClientPolicyService {
   constructor(private http: HttpClient) { }
 
-  addClientPolicy(clientPolicy: ClientPolicy) {
-    return this.http.post(`/api/ClientPolicy/`, clientPolicy);
+  getClientPolicies(clientId: number) {
+    return this.http.get('/api/ClientPolicy/getClientPolicies/' + clientId);
+  }
+
+  addUpdateClientPolicy(clientId: number, policies: any) {
+    debugger;
+    return this.http.post(`/api/ClientPolicy/CreatePolicyClients`, { clientId: clientId, policiesIds: policies });
   }
 }

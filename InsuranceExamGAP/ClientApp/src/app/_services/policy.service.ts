@@ -11,15 +11,19 @@ export class PolicyService {
   }
 
   deletePolicy(id: number) {
-    return this.http.get(`/api/Policies/delete/` + id);
-  }
+    return this.http.delete(`/api/Policies/delete/` + id);
+  } 
   addPolicy(policy: Policy) {
     return this.http.post(`/api/Policies/create`, policy);
   }
   updatePolicy(policy: Policy) {
     return this.http.post(`/api/Policies/update`, policy);
   }
+  checkPolicyRiskCover(policyTypeId: number, riskTypeId: number) {
+    return this.http.get(`/api/Policies/checkPolicyRisk/` + policyTypeId + '/' + riskTypeId);
+  }
 }
+
 
 //this.userService.getAll().pipe(first()).subscribe(users => {
 //    this.users = users;

@@ -6,9 +6,8 @@ namespace InsuranceExamGAP_ORM.Repositories.RepositoryInterfaces
 {
     public interface IClientPolicyRepository
     {
-        Task<List<ClientPolicy>> GetClientPolicies();
+        Task<List<int>> GetClientPoliciesByClientId(int clientId);
 
-        Task<List<ClientPolicy>> AddOrUpdateClientPolicies(List<ClientPolicy> addClientPolicies,
-            List<ClientPolicy> deleteClientPolicies);
+        Task<List<ClientPolicy>> AddOrUpdateClientPolicies(ClientPolicies clientPolicies);
     }
 }

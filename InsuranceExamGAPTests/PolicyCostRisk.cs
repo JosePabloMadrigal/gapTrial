@@ -10,7 +10,7 @@ namespace Tests
         }
 
         [Test]
-        public void Test1()
+        public void RiskCostTest()
         {
             Assert.Pass();
         }
